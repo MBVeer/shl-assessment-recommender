@@ -1,0 +1,92 @@
+[
+    {
+        "name": "Global Skills Development Report",
+        "url": "/solutions/products/product-catalog/view/global-skills-development-report/",
+        "remote_testing": true,
+        "adaptive_irt": true,
+        "duration": "60 minutes",
+        "test_type": ["Ability", "Exercise", "Biodata", "Cognitive", "Development", "Personality"],
+        "description": "Comprehensive assessment combining multiple test types for skills development"
+    },
+    {
+        "name": ".NET Framework 4.5",
+        "url": "/solutions/products/product-catalog/view/net-framework-4-5/",
+        "remote_testing": true,
+        "adaptive_irt": false,
+        "duration": "45 minutes",
+        "test_type": ["Knowledge"],
+        "description": "Technical assessment for .NET Framework 4.5 knowledge"
+    },
+    {
+        "name": ".NET MVC",
+        "url": "/solutions/products/product-catalog/view/net-mvc-new/",
+        "remote_testing": true,
+        "adaptive_irt": false,
+        "duration": "45 minutes",
+        "test_type": ["Knowledge"],
+        "description": "Technical assessment for .NET MVC framework knowledge"
+    },
+    {
+        "name": "Accounts Payable Simulation",
+        "url": "/solutions/products/product-catalog/view/accounts-payable-simulation-new/",
+        "remote_testing": true,
+        "adaptive_irt": false,
+        "duration": "30 minutes",
+        "test_type": ["Simulation"],
+        "description": "Practical simulation for accounts payable processes"
+    },
+    {
+        "name": "Accounts Receivable Simulation",
+        "url": "/solutions/products/product-catalog/view/accounts-receivable-simulation-new/",
+        "remote_testing": true,
+        "adaptive_irt": false,
+        "duration": "30 minutes",
+        "test_type": ["Simulation"],
+        "description": "Practical simulation for accounts receivable processes"
+    },
+    {
+        "name": "ADO.NET",
+        "url": "/solutions/products/product-catalog/view/ado-net-new/",
+        "remote_testing": true,
+        "adaptive_irt": false,
+        "duration": "40 minutes",
+        "test_type": ["Knowledge"],
+        "description": "Technical assessment for ADO.NET knowledge"
+    },
+    {
+        "name": "Branch Manager - Short Form",
+        "url": "/solutions/products/product-catalog/view/branch-manager-short-form/",
+        "remote_testing": true,
+        "adaptive_irt": false,
+        "duration": "35 minutes",
+        "test_type": ["Ability", "Biodata", "Personality"],
+        "description": "Assessment for branch manager roles"
+    },
+    {
+        "name": "Bookkeeping, Accounting, Auditing Clerk Short Form",
+        "url": "/solutions/products/product-catalog/view/bookkeeping-accounting-auditing-clerk-short-form/",
+        "remote_testing": true,
+        "adaptive_irt": false,
+        "duration": "40 minutes",
+        "test_type": ["Personality", "Simulation", "Knowledge", "Biodata", "Ability"],
+        "description": "Comprehensive assessment for accounting and bookkeeping roles"
+    },
+    {
+        "name": "Bank Operations Supervisor - Short Form",
+        "url": "/solutions/products/product-catalog/view/bank-operations-supervisor-short-form/",
+        "remote_testing": true,
+        "adaptive_irt": false,
+        "duration": "45 minutes",
+        "test_type": ["Ability", "Biodata", "Personality", "Simulation"],
+        "description": "Assessment for bank operations supervisor roles"
+    },
+    {
+        "name": "Administrative Professional - Short Form",
+        "url": "/solutions/products/product-catalog/view/administrative-professional-short-form/",
+        "remote_testing": true,
+        "adaptive_irt": false,
+        "duration": "35 minutes",
+        "test_type": ["Ability", "Knowledge", "Personality"],
+        "description": "Assessment for administrative professional roles"
+    }
+] 

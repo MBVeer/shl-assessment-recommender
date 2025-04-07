@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHL Assessment Recommender</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">SHL Assessment Recommender</h1>
+            <p class="text-gray-600">Get personalized assessment recommendations based on job descriptions</p>
+        </header>
+
+        <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6">
+            <div class="mb-6">
+                <label for="jobDescription" class="block text-gray-700 text-sm font-bold mb-2">Job Description</label>
+                <textarea id="jobDescription" rows="6" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter the job description here..."></textarea>
+            </div>
+
+            <button onclick="getRecommendations()" class="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200">
+                Get Recommendations
+            </button>
+
+            <div id="loading" class="hidden mt-6 text-center">
+                <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-blue-500 border-t-transparent"></div>
+                <p class="mt-2 text-gray-600">Getting recommendations...</p>
+            </div>
+
+            <div id="results" class="hidden mt-6">
+                <h2 class="text-xl font-semibold mb-4">Recommended Assessments</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white border border-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Assessment Name</th>
+                                <th class="px-6 py-3 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Remote Testing</th>
+                                <th class="px-6 py-3 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Adaptive/IRT</th>
+                                <th class="px-6 py-3 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Duration</th>
+                                <th class="px-6 py-3 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Test Type</th>
+                                <th class="px-6 py-3 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Match Score</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recommendationsList" class="divide-y divide-gray-200">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="error" class="hidden mt-6 p-4 bg-red-100 text-red-700 rounded-lg"></div>
+        </div>
+    </div>
+
+    <script>
+        async function getRecommendations() {
+            const jobDescription = document.getElementById('jobDescription').value.trim();
+            if (!jobDescription) {
+                showError('Please enter a job description');
+                return;
+            }
+
+            // Show loading state
+            document.getElementById('loading').classList.remove('hidden');
+            document.getElementById('results').classList.add('hidden');
+            document.getElementById('error').classList.add('hidden');
+
+            try {
+                const response = await fetch('/api/recommend', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ job_description: jobDescription }),
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    showError(data.error);
+                } else {
+                    displayRecommendations(data.recommendations);
+                }
+            } catch (error) {
+                showError('An error occurred while getting recommendations');
+            } finally {
+                document.getElementById('loading').classList.add('hidden');
+            }
+        }
+
+        function displayRecommendations(recommendations) {
+            const container = document.getElementById('recommendationsList');
+            container.innerHTML = '';
+
+            recommendations.forEach(rec => {
+                const score = Math.round(rec.score * 100);
+                const scoreColor = score >= 80 ? 'text-green-600' : 
+                                 score >= 60 ? 'text-yellow-600' : 
+                                 'text-red-600';
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <a href="https://www.shl.com${rec.url}" target="_blank" class="text-blue-600 hover:text-blue-800">
+                            ${rec.name}
+                        </a>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        ${rec.remote_testing ? 
+                            '<span class="text-green-600"><i class="fas fa-check"></i> Yes</span>' : 
+                            '<span class="text-red-600"><i class="fas fa-times"></i> No</span>'}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        ${rec.adaptive_irt ? 
+                            '<span class="text-green-600"><i class="fas fa-check"></i> Yes</span>' : 
+                            '<span class="text-red-600"><i class="fas fa-times"></i> No</span>'}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">${rec.duration}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">${rec.test_type.join(', ')}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="${scoreColor} font-semibold">${score}%</span>
+                    </td>
+                `;
+                container.appendChild(row);
+            });
+
+            document.getElementById('results').classList.remove('hidden');
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('error');
+            errorDiv.textContent = message;
+            errorDiv.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html> 
