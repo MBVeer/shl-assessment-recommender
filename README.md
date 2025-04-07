@@ -19,7 +19,7 @@ An intelligent web application that recommends relevant SHL assessments based on
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/shl-assessment-recommender.git
+git clone https://github.com/MBVeer/shl-assessment-recommender.git
 cd shl-assessment-recommender
 ```
 
